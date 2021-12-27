@@ -1,0 +1,17 @@
+#!/bin/bash
+
+printf -v file '%03d.c' "$1"
+if [[ ! -f $file ]]; then
+  cat <<'EOF' > "$file"
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main(void) {
+
+}
+EOF
+else 
+  printf 'file already exists\n' >&2
+fi
+vim "$file"

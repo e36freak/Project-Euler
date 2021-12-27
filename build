@@ -1,0 +1,12 @@
+#!/bin/bash
+
+
+if [[ $1 = *.c ]]; then
+  file=$1
+else
+  printf -v file '%03d.c' "${1##+(0)}"
+fi
+gcc -lm -Wall "$file" || exit
+if [[ $2 ]]; then
+  ./a.out
+fi
