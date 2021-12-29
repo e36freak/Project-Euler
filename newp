@@ -1,6 +1,13 @@
 #!/bin/bash
 
-printf -v file '%03d.c' "$1"
+if [[ $1 ]]; then 
+  printf -v file '%03d.c' "$1"
+else
+  files=([0-9][0-9][0-9].*)
+  tmp=${files[-1]} tmp=${tmp%.*} tmp=${tmp##+(0)}
+  printf -v file '%03d.c' "$((tmp + 1))"
+fi
+
 if [[ ! -f $file ]]; then
   cat <<'EOF' > "$file"
 #include <stdio.h>
@@ -14,4 +21,5 @@ EOF
 else 
   printf 'file already exists\n' >&2
 fi
+
 vim "$file"

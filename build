@@ -1,12 +1,14 @@
 #!/bin/bash
 
-
-if [[ $1 = *.c ]]; then
-  file=$1
+if [[ $1 ]]; then 
+  if [[ $1 = *.c ]]; then
+    file=$1
+  else
+    printf -v file '%03d.c' "${1##+(0)}"
+  fi
 else
-  printf -v file '%03d.c' "${1##+(0)}"
+  files=([0-9][0-9][0-9].*)
+  file=${files[-1]}
 fi
-gcc -lm -Wall "$file" || exit
-if [[ $2 ]]; then
-  ./a.out
-fi
+
+gcc -lm -Wall "$file"
