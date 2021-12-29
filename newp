@@ -1,5 +1,7 @@
 #!/bin/bash
 
+shopt -s extglob
+
 if [[ $1 ]]; then 
   printf -v file '%03d.c' "$1"
 else
@@ -18,8 +20,7 @@ int main(void) {
 
 }
 EOF
+  vim "$file"
 else 
   printf 'file already exists\n' >&2
 fi
-
-vim "$file"
