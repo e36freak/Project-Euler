@@ -9,6 +9,7 @@ typedef struct num {
 
 typedef struct {
   struct num * start;
+  struct num * end;
 } list_t;
 
 void clear_list(list_t * list) {
@@ -37,6 +38,7 @@ void init_primes(list_t * primes) {
     p->next = n;
     p = n;
   }
+  primes->end = n;
   n->next = NULL;
 }
 
@@ -58,15 +60,10 @@ int isprime(list_t * primes, int num) {
     }
     inc = inc->next;
   }
-  while (inc->next != NULL) {
-    if (inc->num == num) {
-      return 1;
-    }
-    inc = inc->next;
-  }
   new = (num_t *)malloc(sizeof(num_t));
   new->num = num;
-  inc->next = new;
+  primes->end->next = new;
+  primes->end = new;
   new->next = NULL;
   return 1;
 }
