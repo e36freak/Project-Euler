@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [[ $1 ]]; then
+  printf -v file '%03d.c' "$1"
+else
+  files=([0-9][0-9][0-9].*)
+  file=${files[-1]}
+fi
+if [[ -f $file ]]; then
+  git add "$file"
+fi
