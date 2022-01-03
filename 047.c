@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdlib.h>
 
-#define MAX 100000
+#define MAX 1000000
 #define CONS 4
 
 typedef struct item {
