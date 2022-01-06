@@ -12,3 +12,4 @@ void bn_add(char dest[], const char a[], const char b[]);
 void bn_sub(char dest[], const char a[], const char b[]);
 void bn_mult(char dest[], const char a[], const char b[]);
 void bn_div(char dest[], const char a[], const char b[]);
+int bn_com(const char a[], const char b[]);

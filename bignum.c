@@ -82,3 +82,15 @@ void bn_mult(char dest[], const char a[], const char b[]) {
 void bn_div(char dest[], const char a[], const char b[]) {
   // TODO
 }
+
+int bn_comp(const char a[], const char b[]) {
+  for (int i = 0; i < SIZE; i++) {
+    if (a[i] > b[i]) {
+      return 1;
+    } else if (a[i] < b[i]) {
+      return -1;
+    }
+  }
+  return 0;
+}
+
