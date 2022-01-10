@@ -10,7 +10,9 @@ void bn_copy(char dest[], const char src[]);
 void bn_print(const char num[]);
 
 void bn_add(char dest[], const char a[], const char b[]);
+void bn_addint(char dest[], const char a[], int b);
 void bn_sub(char dest[], const char a[], const char b[]);
+void bn_subint(char dest[], const char a[], int b);
 void bn_mult(char dest[], const char a[], const char b[]);
 void bn_div(char dest[], const char a[], const char b[]);
 

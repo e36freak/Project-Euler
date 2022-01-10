@@ -47,6 +47,21 @@ void bn_add(char dest[], const char a[], const char b[]) {
   }
 }
 
+void bn_addint(char dest[], const char a[], int b) {
+  if (b < 0) {
+    bn_subint(dest, a, 0-b);
+    return;
+  }
+  bn_zero(dest);
+  int sum = b, rem;
+  for (int i = 0; i < SIZE; i++) {
+    sum += a[i];
+    rem = sum % 10;
+    sum /= 10;
+    dest[i] = rem;
+  }
+}
+
 void bn_sub(char dest[], const char a[], const char b[]) {
   char tmp[SIZE];
   bn_zero(dest);
@@ -59,6 +74,16 @@ void bn_sub(char dest[], const char a[], const char b[]) {
     }
     dest[i] = s;
   }
+}
+
+void bn_subint(char dest[], const char a[], int b) {
+  if (b < 0) {
+    bn_addint(dest, a, 0-b);
+    return;
+  }
+  char tmp[SIZE];
+  bn_itoa(tmp, b);
+  bn_sub(dest, a, tmp);
 }
 
 void bn_mult(char dest[], const char a[], const char b[]) {
@@ -75,6 +100,25 @@ void bn_mult(char dest[], const char a[], const char b[]) {
         k++;
         m /= 10;
       }
+    }
+  }
+}
+
+void bn_multint(char dest[], const char a[], int b) {
+  int tmp = 0, j = 0, t = 0;
+  bn_zero(dest);
+  for (int i = 0; i < SIZE; i++) {
+    tmp = a[i] * b;
+    j = 0;
+    while (tmp > 0) {
+      dest[i + j] += tmp % 10;
+      if (dest[i + j] >= 10) {
+        t = dest[i + j];
+        dest[i + j] = t % 10;
+        dest[i + j + 1] += t / 10;
+      }
+      tmp /= 10;
+      j++;
     }
   }
 }
@@ -162,6 +206,7 @@ void bn_div(char dest[], const char a[], const char b[]) {
 
   // fourier division
   int c[SIZE] = {0}, d[SIZE] = {0}; int o[SIZE] = {0};
+  char build1[SIZE] = {0}, build2[SIZE] = {0};
   int tmp, rem, alen, blen, rlen, r;
 
   // determine number of digits in result (truncation)
@@ -178,7 +223,9 @@ void bn_div(char dest[], const char a[], const char b[]) {
   } else {
     rlen++;
     for (int i = 0; i < alen && i < blen; i++) {
-      if (d[i] > c[i]) {
+      if (d[i] < c[i]) {
+        break;
+      } else if (d[i] > c[i]) {
         rlen -= 1;
         break;
       }
@@ -202,7 +249,7 @@ void bn_div(char dest[], const char a[], const char b[]) {
   o[0] = tmp / d[0];
   rem = tmp % d[0];
 
-  for (int i = 1; i < rlen; i++) {
+  for (int i = 1; i < SIZE; i++) {
     tmp = (rem * 100) + c[i + 1];
     for (int j = 1; j <= i; j++) {
       tmp -= o[i - j] * d[j];
@@ -213,30 +260,31 @@ void bn_div(char dest[], const char a[], const char b[]) {
   }
 
   // handle more than two digits in partial quotient, and negative numbers
-  for (int i = 0; i < rlen; i++) {
-    tmp = o[i] * 100;
-    tmp += o[i+1];
-    o[i] = (tmp / 100); 
-    o[i+1] = tmp % 100;
-    if (o[i] >= 100) {
-      o[i+1] += (o[i] % 10) * 100;
-      o[i] /= 10;
-    }
+  bn_itoa(build1, o[0]);
+  for (int i = 1; i < rlen; i++) {
+    bn_multint(build2, build1, 100);
+    bn_addint(build1, build2, o[i]);
   }
 
-  // combine, reverse, and truncate
-  tmp = 0;
-  int flag = 0;
-  for (int i = (rlen-1) / 2; i >= 0; i--) {
-    if (flag || !(rlen % 2)) {
-      dest[tmp++] = o[i] % 10;
+  // truncate and assign to dest
+  for (int i = SIZE - 1; i >= 0; i--) {
+    if (build1[i] > 0) {
+      for (int j = 0; j < rlen; j++) {
+        dest[rlen - j - 1] = build1[i - j];
+      }
+      break;
     }
-    flag = 1;
-    dest[tmp++] = o[i] / 10;
   }
 }
 
 int bn_comp(const char a[], const char b[]) {
+  int alen = bn_length(a);
+  int blen = bn_length(b);
+  if (alen > blen) {
+    return 1;
+  } else if (alen < blen) {
+    return -1;
+  }
   for (int i = 0; i < SIZE; i++) {
     if (a[i] > b[i]) {
       return 1;
