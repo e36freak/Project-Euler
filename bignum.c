@@ -117,10 +117,6 @@ static void bn_longdiv(char dest[], const char a[], const long long b) {
     if (len) c[i] = a[tmp++];
   }
   len++;
-  for (i = 0; i < len; i++) {
-    printf("%d ", c[i]);
-  }
-  printf("\n");
   d = 0; i = 0;
   tmp = c[i];
   while (i < len) {
