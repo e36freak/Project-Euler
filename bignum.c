@@ -38,10 +38,10 @@ void bn_print(const char num[]) {
 void bn_add(char dest[], const char a[], const char b[]) {
   bn_zero(dest);
   for (int i = 0; i < SIZE; i++) {
-    int s = a[i] + b[i];
+    int s = dest[i] + a[i] + b[i];
     int j = i;
     while (s > 0) {
-      dest[j++] += s % 10;
+      dest[j++] = s % 10;
       s /= 10;
     }
   }
