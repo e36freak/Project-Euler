@@ -18,3 +18,5 @@ void bn_div(char dest[], const char a[], const char b[]);
 
 int bn_comp(const char a[], const char b[]);
 int bn_length(const char num[]);
+int bn_ispalindrome(const char num[]);
+void bn_rev(char dest[], const char num[]);

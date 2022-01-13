@@ -303,3 +303,34 @@ int bn_length(const char num[]) {
   }
   return 0;
 }
+
+int bn_ispalindrome(const char num[]) {
+  int len = 0;
+  for (int i = SIZE - 1; i >= 0; i--) {
+    if (num[i] > 0) {
+      len = i + 1;
+      break;
+    }
+  }
+  for (int i = 0; i < len / 2; i++) {
+    if (num[i] != num[len-i-1]) {
+      return 0;
+    }
+  }
+  return 1;
+}
+
+void bn_rev(char dest[], const char num[]) {
+  bn_zero(dest);
+  int len = 0;
+  for (int i = SIZE - 1; i >= 0; i--) {
+    if (num[i] > 0) {
+      len = i + 1;
+      break;
+    }
+  }
+  int j = 0;
+  for (int i = len - 1; i >= 0; i--) {
+    dest[j++] = num[i];
+  }
+}
