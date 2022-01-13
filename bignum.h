@@ -18,6 +18,8 @@ void bn_multint(char dest[], const char a[], int b);
 void bn_div(char dest[], const char a[], const char b[]);
 
 int bn_comp(const char a[], const char b[]);
-int bn_length(const char num[]);
-int bn_ispalindrome(const char num[]);
-void bn_rev(char dest[], const char num[]);
+int bn_length(const char a[]);
+int bn_ispalindrome(const char a[]);
+void bn_rev(char dest[], const char a[]);
+int bn_sumdigits(const char a[]);
+

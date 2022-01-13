@@ -295,42 +295,50 @@ int bn_comp(const char a[], const char b[]) {
   return 0;
 }
 
-int bn_length(const char num[]) {
+int bn_length(const char a[]) {
   for (int i = SIZE - 1; i >= 0; i--) {
-    if (num[i] > 0) {
+    if (a[i] > 0) {
       return i + 1;
     }
   }
   return 0;
 }
 
-int bn_ispalindrome(const char num[]) {
+int bn_ispalindrome(const char a[]) {
   int len = 0;
   for (int i = SIZE - 1; i >= 0; i--) {
-    if (num[i] > 0) {
+    if (a[i] > 0) {
       len = i + 1;
       break;
     }
   }
   for (int i = 0; i < len / 2; i++) {
-    if (num[i] != num[len-i-1]) {
+    if (a[i] != a[len-i-1]) {
       return 0;
     }
   }
   return 1;
 }
 
-void bn_rev(char dest[], const char num[]) {
+void bn_rev(char dest[], const char a[]) {
   bn_zero(dest);
   int len = 0;
   for (int i = SIZE - 1; i >= 0; i--) {
-    if (num[i] > 0) {
+    if (a[i] > 0) {
       len = i + 1;
       break;
     }
   }
   int j = 0;
   for (int i = len - 1; i >= 0; i--) {
-    dest[j++] = num[i];
+    dest[j++] = a[i];
   }
+}
+
+int bn_sumdigits(const char a[]) {
+  int sum = 0;
+  for (int i = 0; i < SIZE; i++) {
+    sum += a[i];
+  }
+  return sum;
 }
