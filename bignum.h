@@ -14,6 +14,7 @@ void bn_addint(char dest[], const char a[], int b);
 void bn_sub(char dest[], const char a[], const char b[]);
 void bn_subint(char dest[], const char a[], int b);
 void bn_mult(char dest[], const char a[], const char b[]);
+void bn_multint(char dest[], const char a[], int b);
 void bn_div(char dest[], const char a[], const char b[]);
 
 int bn_comp(const char a[], const char b[]);
