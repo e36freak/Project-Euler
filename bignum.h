@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#define SIZE 256
+#define SIZE 512
 
 // TODO handle negative numbers
 
