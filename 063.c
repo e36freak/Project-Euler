@@ -4,14 +4,13 @@
 
 int main(void) {
   int ans = 0;
+  int low = 0;
+  int n = 1;
 
-  ans = 0;
-  for (int x = 0; x < 10; x++) {
-    int n = 1;
-    while (((long)log10((long)pow(x, n)) == n - 1)) {
-      ans++;
-      n++;
-    }
+  while (low < 10) {
+    low = (int)ceil(pow(10, ((double)n - 1) / n));
+    ans += 10 - low;
+    n++;
   }
   printf("%d\n", ans);
 }
