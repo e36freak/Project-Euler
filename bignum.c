@@ -2,6 +2,7 @@
 #include "bignum.h"
 
 // TODO handle negative numbers
+// TODO make way more efficient, maybe base 256?
 
 void bn_zero(char a[]) {
   for (int i = 0; i < SIZE; i++) {
