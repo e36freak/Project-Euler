@@ -92,14 +92,14 @@ void bn_mult(char dest[], const char a[], const char b[]) {
     for (int j = 0; j < SIZE; j++) {
       int m = a[i] * b[j];
       int k = i + j;
-      while (m > 0) {
+      do {
         if ((dest[k] += m % 10) >= 10) {
           dest[k + 1] += dest[k] / 10;
           dest[k] %= 10;
         }
         k++;
         m /= 10;
-      }
+      } while (m > 0);
     }
   }
 }
