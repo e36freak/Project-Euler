@@ -11,4 +11,4 @@ else
   file=${files[-1]}
 fi
 
-gcc "$file" -lm -L. -lbignum -Wall
+gcc "$file" -ggdb -lm -L. -lbignum -Wall
